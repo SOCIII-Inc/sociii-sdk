@@ -1,0 +1,42 @@
+{
+  "name": "@sociii/sdk",
+  "version": "0.1.0",
+  "description": "JavaScript SDK for the SOCIII Digital Worker platform",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "sociii",
+    "digital-worker",
+    "ai",
+    "marketplace",
+    "sdk"
+  ],
+  "author": "SOCIII, Inc. <hello@sociii.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Titleapp/sociii-sdk",
+    "directory": "sdk"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
+  }
+}
