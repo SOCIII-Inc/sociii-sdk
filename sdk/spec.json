@@ -1,0 +1,96 @@
+{
+  "specVersion": "1.0.0",
+  "released": "2026-06-28",
+  "status": "stable",
+  "changelog": "Initial stable spec — establishes the contract all future versions must remain backward-compatible with.",
+
+  "_note": "This file is the versioned contract between SOCIII and creators. If your worker-spec.json declares 'sociii-sdk-version: 1.0.0', everything in this file is guaranteed to work for the lifetime of the v1 series. The platform may add new capabilities but will never remove or break anything declared here.",
+
+  "workerSpec": {
+    "required": ["id", "name", "slug", "type", "status"],
+    "optional": [
+      "description", "suite", "phase", "vertical",
+      "pricing", "tags", "valueBucket", "capabilitySummary",
+      "canvasTabs", "alexRegistration", "temporalType",
+      "controlCenterContribution", "vault_reads", "vault_writes"
+    ],
+    "fieldDefs": {
+      "id": "Unique identifier, e.g. 'MYCO-001'. Prefix with your initials.",
+      "name": "Human-readable display name.",
+      "slug": "URL-safe identifier used in routing, e.g. 'my-worker'. Lowercase, hyphens only.",
+      "type": "One of: standalone | orchestrator | bundle",
+      "status": "One of: live | waitlist | coming_soon | internal",
+      "pricing.monthly": "USD cents per month, or 0 for free.",
+      "canvasTabs": "Array of tab objects that appear in the worker's canvas panel.",
+      "alexRegistration.priority": "One of: highest | high | normal | low — how prominently Alex surfaces this worker.",
+      "alexRegistration.acceptsTasks": "Boolean — whether Alex can assign tasks to this worker.",
+      "temporalType": "One of: always_on | on_demand | scheduled"
+    }
+  },
+
+  "canvasTabs": {
+    "tabFields": {
+      "required": ["id", "label", "signal"],
+      "optional": ["order", "default", "view", "description"]
+    },
+    "guaranteedSignals": {
+      "card:work-product": "Generic work product — renders chat-driven structured output",
+      "card:chart-bar": "Bar chart from conversation data",
+      "card:chart-line": "Line chart from conversation data",
+      "card:chart-pie": "Pie chart from conversation data",
+      "card:image": "Rendered image from generate_image tool",
+      "card:map": "Map card with lat/lng markers",
+      "esign:documents": "Anchored signing records — SOCIII chain proof for any signing rail",
+      "card:kpi-summary": "KPI grid — metrics from conversation payload",
+      "card:bullet-list": "Bullet list card",
+      "card:table": "Data table rendered from conversation"
+    }
+  },
+
+  "alexTools": {
+    "guaranteedTools": {
+      "generate_image": "Generate images via Fal.ai — available to all workers",
+      "lookup_vault_assets": "Resolve Vault DTC IDs before writing logbook entries",
+      "anchor_signed_document": "Create an immutable SOCIII anchor record for a completed signing"
+    },
+    "verticalTools": {
+      "lookup_property": "ATTOM property data — available to real-estate vertical workers",
+      "site_recon_lookup": "ATTOM + GIS feasibility — site-recon-001 only",
+      "find_distressed_cre": "ATTOM distressed CRE screen — cre-analyst only",
+      "find_cre_contacts": "Apollo CRE contacts — cre-analyst only"
+    }
+  },
+
+  "vaultEvents": {
+    "guaranteedTypes": [
+      "enrollment.recorded", "attendance.recorded", "reflection.submitted",
+      "slo.observed", "professionalism.observed", "incident.recorded",
+      "grade.locked", "course.graded", "assessment.submitted",
+      "assignment.submitted", "competency.assessed", "clinical_hours.logged",
+      "esign_completed"
+    ],
+    "logbookEndpoint": "POST /v1/nurse-edu:append",
+    "transcriptEndpoint": "GET /v1/nurse-edu:transcript?dtcId={id}"
+  },
+
+  "platformGuarantees": [
+    "Workers declared at v1.0.0 will continue to render on SOCIII for the life of the v1 series.",
+    "Canvas signals listed in canvasTabs.guaranteedSignals will always resolve to a rendered component.",
+    "Alex tools listed in alexTools.guaranteedTools are always injected — you do not need to declare them.",
+    "Worker slugs are globally unique — first to claim, first served.",
+    "The platform never modifies your worker spec without your consent.",
+    "canvasTabs.esign:documents is always available to any worker — no registration needed."
+  ],
+
+  "platformNonGuarantees": [
+    "canvas signals NOT in guaranteedSignals may be removed after 90 days notice",
+    "The platform may add new required fields in v2.0.0 — v1 workers are grandfathered",
+    "Model providers (Anthropic, OpenAI) may change — workers must not assume a specific model"
+  ],
+
+  "versioningRules": {
+    "patchBump": "Bug fixes, typo corrections, clarifications — no behavior change",
+    "minorBump": "New optional fields, new guaranteed signals, new tools added — backward compatible",
+    "majorBump": "New required fields, breaking changes — v1 workers grandfathered, migration guide shipped"
+  }
+}
