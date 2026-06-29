@@ -1,0 +1,55 @@
+{
+  "$schema": "https://sociii.ai/sdk/schema/1.0.0",
+  "sociii-sdk-version": "1.0.0",
+
+  "id": "MYCO-001",
+  "name": "My Worker Name",
+  "slug": "my-worker-slug",
+  "type": "standalone",
+  "status": "waitlist",
+
+  "description": "One sentence describing what this worker does for its user.",
+
+  "suite": "My Suite",
+  "vertical": "my_vertical",
+  "phase": 0,
+
+  "pricing": {
+    "monthly": 49
+  },
+
+  "tags": ["keyword-1", "keyword-2"],
+  "valueBucket": ["make_money", "stay_organized"],
+
+  "capabilitySummary": "Short paragraph (2-3 sentences) describing the worker's capabilities. Used in the marketplace and in Alex's briefings.",
+
+  "canvasTabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "signal": "card:work-product",
+      "default": true,
+      "order": 0,
+      "description": "Main view — what Alex shows when the user opens this worker."
+    }
+  ],
+
+  "alexRegistration": {
+    "priority": "normal",
+    "acceptsTasks": true,
+    "briefingContribution": "my_worker_status"
+  },
+
+  "temporalType": "always_on",
+
+  "vault_reads": [],
+  "vault_writes": [],
+
+  "_notes": {
+    "slug": "Must be globally unique across all SOCIII workers. Lowercase, hyphens only. Cannot be changed after publish.",
+    "id": "Prefix with your creator initials. e.g. RUTH-001, KENT-001.",
+    "canvasTabs.signal": "Use a guaranteed signal from sdk/spec.json or define a custom one in your PR.",
+    "status": "Start at 'waitlist' while building. Flip to 'live' when ready to publish.",
+    "valueBucket": "Pick from: make_money, save_money, save_time, stay_organized, stay_compliant, delight_customers"
+  }
+}
